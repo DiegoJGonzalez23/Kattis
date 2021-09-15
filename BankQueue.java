@@ -1,66 +1,58 @@
- package tutorialstart.Kattis;
+//package ss;
 import java.util.*;
 
-public class BankQueue {
+// Diego Gonzalez
+// Bank Queue
+// 9.15.21
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+
+public class Bankq {
+	
+	public static void main(String[] args){
+	Scanner sc = new Scanner(System.in);
+	
+	int customernumber = sc.nextInt();
+	int time = sc.nextInt();
+	
+	ArrayList<customer> linesort = new ArrayList<>();
+	ArrayList<customer> linefinal = new ArrayList<>();
+	
+	for(int x = 0; x < customernumber; x++){
+		linesort.add(new customer(sc.nextInt(),sc.nextInt()));
+	}
+	
+	Collections.sort(linesort);
+	
+	
 		
-		Scanner sc = new Scanner(System.in);
+	
+	
+	
 		
-		int customers = sc.nextInt();
-		long total = 0;
-		int time = sc.nextInt();
+	
+	
+	int timenow = 0;
+	int total = 0;
+	for(int x = time-1; x >= 0; x--){
+		customer best = maxCusto(linesort, x);
 		
-		PriorityQueue<customer> prio = new PriorityQueue<customer>();
-		
-		for(int x = 0; x<customers;x++) {
-			prio.add(new customer(sc.nextInt(),sc.nextInt()));
-		}
-		
-		int p = 0;
-		for(int y = 0; y < time; y++) {
-			
-			if(prio.size() > 0) {
-				
-				customer curr = prio.poll();
-				
-				while(curr.timeu < y) {
-					if(prio.size() > 0) {
-						curr = prio.poll();
-					}
-					else {
-					p = 1;
-					break;
-					}
-				}
-				if(p == 0) {
-					total += curr.cash;
-				}
-				
-				
-				
-				
-				
-			}
-			
-			else {
-				break;
-			}
-			
-			
-			
+		if(best.timeu != (-900)){
+			linesort.remove(best);
+			total += best.cash;
 			
 		}
-		
-		System.out.println(total);
-		
-		
-		
 		
 	}
 	
-	 
+	System.out.println(total);
+	
+	
+	
+	
+	
+	
+	}
+	
 	static class customer implements Comparable<customer>{
 		
 		int cash;
@@ -98,12 +90,26 @@ public class BankQueue {
 			
 			return 0;
 		}
+	
+	
+
+	}
+	
+	public static customer maxCusto(ArrayList<customer> n, int timen){
+		customer a = new customer(-900,-900);
+		Collections.reverse(n);
+		for(customer x: (n)){
+			
+			if (x.timeu >= timen && x.cash > a.cash){
+				a = x;
+			}
+			
+			
+		}
 		
-		
-		
+		return a;
 		
 		
 		
 	}
-
 }
