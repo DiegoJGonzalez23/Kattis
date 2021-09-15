@@ -1,61 +1,93 @@
-//package ss;
-
-// Diego Gonzalez
-// Problem Babelfish
-// 9.13.21
-
-
-
+package ss;
 import java.util.*;
 
 
-public class Babelfish {
 
-	public static void main(String[] args) {
+
+public class Bankq {
+	
+	public static void main(String[] args){
+	Scanner sc = new Scanner(System.in);
+	
+	int customernumber = sc.nextInt();
+	int time = sc.nextInt();
+	
+	ArrayList<customer> linesort = new ArrayList<>();
+	ArrayList<customer> linefinal = new ArrayList<>();
+	
+	for(int x = 0; x < customernumber; x++){
+		linesort.add(new customer(sc.nextInt(),sc.nextInt()));
+	}
+	
+	Collections.sort(linesort);
+	
+	
 		
-		Scanner sc = new Scanner(System.in);
-		HashMap<String, String> dict = new HashMap<>();
+	
+	
+	
 		
-		int p = 1;
-		while(sc.hasNext()){
-			String t = sc.nextLine();
+	
+	
+	int timenow = 0;
+	int total = 0;
+	for(customer boy: linesort){
+		if(boy.timeu>= timenow && timenow < time){
+			total += boy.cash;
+			timenow++;
+		}
+		
+		
+	}
+	
+	System.out.println(total);
+	
+	
+	
+	
+	
+	
+	}
+	
+	static class customer implements Comparable<customer>{
+		
+		int cash;
+		int timeu;
+		
+		public customer(int cash, int timeu) {
 			
+			this.cash = cash;
+			this.timeu = timeu;
 			
-			
-			if(p == 0){
-				if(dict.containsKey(t)){
-					
-					System.out.println(dict.get(t));
-				}
-				
-				else{
-					System.out.println("eh");
-				}
-				
-				
-				
-			}
-			
-			else{
-			
-			
-			if (t.equals("")){
-				
-				p = 0;
-				
-				
-			}
-			
-			else{
-			String[]  dicky = t.split(" ");
-			dict.put(dicky[1], dicky[0]);
-			
-			
-			}
-			}
 			
 		}
+		
+
+		@Override
+		public int compareTo(customer o) {
+			// TODO Auto-generated method stub
+			if (this.timeu > o.timeu) {
+				return 1;
+			}
+			else if(o.timeu>this.timeu) {
+				return -1;
+			}
+			
+			else {
+				if (this.cash > o.cash) {
+					return -1;
+				}
+				else if(o.cash>this.cash) {
+					return 1;
+				}
+				
+				
+			}
+			
+			return 0;
+		}
+	
+	
 
 	}
-
 }
